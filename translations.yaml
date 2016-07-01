@@ -1,0 +1,235 @@
+# Based on: https://github.com/sympy/sympy/wiki/Git-hg-rosetta-stone
+
+# commands:
+#
+#   hg|git:
+#     (String):
+#       - Used for lookup and resolving usage
+#     (Array):
+#       - All value will be used for lookup
+#       - First value for resolving usage (with the command "git/hg [value]")
+#
+#   hg_usage|git_usage: (overrides hg|git for usage result)
+#     (String):
+#       - Used, without the command, as usage result
+#     (Array):
+#       - Each item is printed with the command prepended
+#           git/hg [usage_1]
+#           git/hg [usage_2]
+#           ...
+#     (Hash) (from/to):
+#       - Each key/value is printed with the commands prepended
+#           #git-to-hg
+#             git [key_1] => hg [value_1]
+#           #hg-to-git
+#             hg [key_1] => git [value_1]
+commands:
+  - hg: cat -r rev
+    git:
+      - show rev
+      - "show rev:"
+    hg_usage: hg cat -r rev [file]
+    git_usage: git show rev:[file]
+  - hg: init
+    git: init
+  - hg: clone
+    git: clone
+    hg_usage: hg clone [url (http|ssh://url.to/repo.hg)]
+    git_usage: git clone [url (http|ssh|git://url.to/repo.hg)]
+  - hg: clone -U
+    git: clone --bare
+    hg_usage: hg clone -U [url (http://url.to/repo.hg)]
+    git_usage: git clone --bare [url (http|ssh|git://url.to/repo.git)]
+  - hg: diff
+    git:
+      - diff HEAD
+      - diff
+  - hg: status
+    git: status
+  - hg: status -c
+    git: ls-files -t | grep '^H'
+  - hg: manifest
+    git: ls-tree -r --name-only --full-tree HEAD
+  - hg: --??--
+    git: ls-tree
+  - hg: parents
+    git: show
+    git_usage:
+      - show --pretty=format:'%P' -s
+      - show -s
+      - show
+  - hg: commit
+    git:
+      - commit -a
+      - commit
+    hg_usage:
+      commit -a: commit
+  - hg: record
+    git_usage:
+      - add -p; git commit
+      - gui; git commit  (visually select chunks to add, then)
+      - add -i; git commit  (interactively select and commit chunks)
+  - hg: view
+    git: gui
+    git_usage: "git gui or `gitk`"
+  - hg: paths
+    git: remote -v
+  - git: remote
+    hg_usage: "# edit paths in [repo]/.hg/hgrc"
+  - hg: add
+    git: add
+    git_usage:
+      - "add     # adds _content_ to index"
+      - "add -p  # works on a hunk-by-hunk basis"
+  - hg: mv
+    git: mv
+  - hg: rm
+    git: rm
+  - hg: push
+    git: push
+  - hg: pull
+    git: fetch
+  - hg: pull -u
+    git: pull
+  - git: rebase
+    hg_usage: "* mercurial cannot rebase"
+  - hg: tag
+    git: tag
+  - hg: addremove
+    git: add -A
+  - git: reset
+    hg_usage:
+      reset --hard: revert -a
+      reset --soft (bare repo): strip [hash]
+      reset --hard [hash]: strip [hash]
+      reset HEAD~: rollback
+  - hg: revert -a
+    git: reset --hard
+    hg_usage:
+      reset --hard: revert -a
+      reset --hard [hash]: strip [hash]
+  - hg: revert
+    git: checkout
+    hg_usage:
+      checkout [file]: revert [file]
+      checkout HEAD: update tip
+      checkout -f: update -C
+      checkout [branch]: update [branch]
+      checkout `git rev-list -n 1 --before="[date]" master`: up --date [date]
+    git_usage: git checkout [file]
+  - hg: purge
+    git: clean -fd
+  - hg: purge --all
+    git: clean -fdx
+  - hg: strip
+    git_usage:
+      - "reset --hard [hash]^  # on a normal repository"
+      - "reset --soft [hash]^  #on a bare repository"
+  - git: reset --soft
+    hg_usage: hg strip [hash]
+  - hg: forget
+    git: rm --cached
+  - hg: export
+    git: format-patch
+  - hg:
+      - import --no-commit [patch]
+      - import --no-commit
+    git:
+      - apply [patch]
+      - apply
+  - hg:
+      - import [patch]
+      - import
+    git:
+      - am [patch]
+      - am
+  - hg: out
+    git_usage: git fetch && git log origin/master..
+  - hg: in
+    git_usage: git fetch && git log ..origin/master
+  - hg: update tip
+    git: checkout HEAD
+    git_usage:
+      - checkout HEAD
+      - checkout master
+      - "merge FETCH_HEAD # depending on what you did before this"
+  - hg: update -C
+    git: checkout -f
+  - hg: update
+    git_usage: |
+      git checkout [branch]
+      * Note that "git branch [branch]" is not the same as this.
+  - hg: up
+    git_usage:
+      up --date=[date]: checkout `git rev-list -n 1 --before="[date]" master`
+  - hg:
+    - resolve -a -m
+    - resolve
+    git: add -u
+  - git: rev-parse
+    hg_usage:
+      hg root: git rev-parse --show-toplevel
+      hg branch: git rev-parse --abbrev-ref HEAD
+  - hg: root
+    git: rev-parse --show-toplevel
+  - hg:
+      - log -G
+      - glog
+    git: log
+    git_usage: |
+      - log --graph --all --decorate
+      - log --graph --all
+      - log
+  - hg:
+      - annotate -u -n
+      - annotate -u
+    git: blame
+    hg_usage:
+      - annotate -u -n
+      - annotate -u
+  - hg: verify
+    git: fsck
+  - hg: branches
+    git:
+      - branch -a
+      - branch
+    hg_usage:
+      branch: --??--
+      branch -a: branches
+      rev-parse --abbrev-ref HEAD: branch
+  - hg: branch
+    git: rev-parse --abbrev-ref HEAD
+  - hg: rollback
+    git:
+      - reset HEAD~
+      - reset HEAD
+  - hg: backout
+    git: revert
+  - hg: help
+    git: help
+  - hg: hgignore
+    git: gitignore
+  - hg:
+      - hgrc
+      - config
+    git:
+      - gitconfig
+      - config
+    hg_usage: |
+      ~/.hgrc   > 	~/.gitconfig
+      .hg/hgrc	>  .git/config
+      also, see `git help remote`
+    git_usage: |
+      ~/.gitconfig  > ~/.hgrc
+      .git/config     > .hg/hgrc
+  - hg:
+      - qimport
+      - qpush
+      - qpop
+    git_usage: |
+      * A separate patch manager extension is probably not necessary in git,
+        normal workflow combined with `git rebase -i` should cover your needs
+  - hg:
+    - qnew -f [patch]
+    - qnew -f
+    git_usage: hg qnew -f [patch] > --??--
