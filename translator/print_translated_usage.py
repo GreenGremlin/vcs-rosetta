@@ -13,16 +13,19 @@ def __load_translations__(file_location):
         except yaml.YAMLError as exc:
             print(exc)
 
-def __not_found_message__(self, args, translations_file):
+def __not_found_message__(args, from_type, translations_file):
     return 'No translation found for `{from_type} {args}` in "{file}"'.format(
-        from_type = self.from_type,
+        from_type = from_type,
         args = args,
         file = translations_file
     )
 
-def print_usage(from_type, to_type, args):
+def main(from_type, to_type, args):
+    if len(args) == 0:
+        print('Please provide at least one argument to translate!')
+        return
     script_dir = os.path.dirname(os.path.realpath(__file__));
-    translations_file = os.path.join(os.getcwd(), script_dir, 'translations.yaml')
+    translations_file = os.path.join(os.getcwd(), script_dir, 'translations/git_hg.yaml')
     translations = __load_translations__(translations_file)
     translator = UsageTranslator(from_type = from_type,
                                  to_type = to_type,
@@ -32,8 +35,8 @@ def print_usage(from_type, to_type, args):
     if usage is not None:
         print(usage)
     else:
-        print(__not_found_message__(args, translations_file))
+        print(__not_found_message__(args, from_type, translations_file))
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    print_usage(from_type = args[0], to_type = args[2], args = args[3])
+    main(from_type = args[0], to_type = args[2], args = args[3])
