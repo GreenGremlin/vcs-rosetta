@@ -6,7 +6,7 @@ setup(name='vcs-rosetta',
       author_email='jonathan@xgecko.com',
     #   url='https://www.',
       packages=['translator'],
-      data_files=[('translations', ['translations/git_hg.yaml'])],
+      data_files=[('translations', ['translator/translations/git_hg.yaml'])],
       scripts=[
           'scripts/g2h',
           'scripts/h2g'
