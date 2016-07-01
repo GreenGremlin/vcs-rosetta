@@ -25,7 +25,7 @@ def main(from_type, to_type, args):
         print('Please provide at least one argument to translate!')
         return
     script_dir = os.path.dirname(os.path.realpath(__file__));
-    translations_file = os.path.join(os.getcwd(), script_dir, 'translations/git_hg.yaml')
+    translations_file = os.path.join(os.getcwd(), script_dir, 'data/git_hg.yaml')
     translations = __load_translations__(translations_file)
     translator = UsageTranslator(from_type = from_type,
                                  to_type = to_type,
