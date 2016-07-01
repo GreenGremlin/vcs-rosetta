@@ -3,5 +3,5 @@
 
 ## Installation
 ``` shell
-pip install git+git://github.com:GreenGremlin/vcs-rosetta.git
+pip install git+git://github.com/GreenGremlin/vcs-rosetta.git
 ```
