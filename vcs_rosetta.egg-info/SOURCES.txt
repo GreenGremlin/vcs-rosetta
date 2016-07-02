@@ -1,9 +1,0 @@
-scripts/g2h
-scripts/h2g
-translator/__init__.py
-translator/print_translated_usage.py
-translator/usage_translator.py
-vcs_rosetta.egg-info/PKG-INFO
-vcs_rosetta.egg-info/SOURCES.txt
-vcs_rosetta.egg-info/dependency_links.txt
-vcs_rosetta.egg-info/top_level.txt

@@ -1,12 +1,12 @@
 from setuptools import setup
 
-setup(name='vcs-rosetta',
-      description='Version Control System translator',
+setup(name='vcsrosetta',
+      description='Version Control System translator - includes g2h (git to hg) and h2g (hg to git)',
       author='Jonathan Felchlin',
       author_email='jonathan@xgecko.com',
     #   url='https://www.',
-      packages=['translator'],
-      package_data={'translator': ['data/*.yaml']},
+      packages=['vcsrosetta'],
+      package_data={'vcsrosetta': ['data/git_hg.yaml']},
       scripts=[
           'scripts/g2h',
           'scripts/h2g'
