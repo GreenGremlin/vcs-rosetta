@@ -5,3 +5,14 @@
 ``` shell
 pip install git+git://github.com/GreenGremlin/vcs-rosetta.git
 ```
+
+## Usage
+### g2h (git to hg)
+``` shell
+g2h checkout
+```
+
+### h2g (hg to git)
+``` shell
+h2g update
+```
