@@ -71,7 +71,10 @@ commands:
       - add -i; git commit  (interactively select and commit chunks)
   - hg: view
     git: gui
-    git_usage: "git gui or `gitk`"
+    git_usage: |
+      git gui # configured as an [alias] in ~/.gitconfig
+      gitk
+      stree # see https://www.sourcetreeapp.com/
   - hg: paths
     git: remote -v
   - git: remote
@@ -83,7 +86,9 @@ commands:
       - "add -p  # works on a hunk-by-hunk basis"
   - hg: mv
     git: mv
-  - hg: rm
+  - hg:
+      - rm
+      - remove
     git: rm
   - hg: push
     git: push
@@ -115,7 +120,7 @@ commands:
       checkout HEAD: update tip
       checkout -f: update -C
       checkout [branch]: update [branch]
-      checkout `git rev-list -n 1 --before="[date]" master`: up --date [date]
+      checkout `git rev-list -n 1 --before="[date]" master`: update --date [date]
     git_usage: git checkout [file]
   - hg: purge
     git: clean -fd
@@ -124,7 +129,7 @@ commands:
   - hg: strip
     git_usage:
       - "reset --hard [hash]^  # on a normal repository"
-      - "reset --soft [hash]^  #on a bare repository"
+      - "reset --soft [hash]^  # on a bare repository"
   - git: reset --soft
     hg_usage: hg strip [hash]
   - hg: forget
@@ -145,7 +150,9 @@ commands:
       - am
   - hg: out
     git_usage: git fetch && git log origin/master..
-  - hg: in
+  - hg:
+      - incoming
+      - in
     git_usage: git fetch && git log ..origin/master
   - hg: update tip
     git: checkout HEAD
@@ -159,17 +166,19 @@ commands:
     git_usage: |
       git checkout [branch]
       * Note that "git branch [branch]" is not the same as this.
-  - hg: up
+  - hg:
+      - update
+      - up
     git_usage:
-      up --date=[date]: checkout `git rev-list -n 1 --before="[date]" master`
+      update --date=[date]: checkout `git rev-list -n 1 --before="[date]" master`
   - hg:
     - resolve -a -m
     - resolve
     git: add -u
   - git: rev-parse
     hg_usage:
-      hg root: git rev-parse --show-toplevel
-      hg branch: git rev-parse --abbrev-ref HEAD
+      root: rev-parse --show-toplevel
+      branch: rev-parse --abbrev-ref HEAD
   - hg: root
     git: rev-parse --show-toplevel
   - hg:
