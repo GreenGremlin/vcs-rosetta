@@ -12,10 +12,10 @@ def main():
             example: g2h checkout
         """)
         return
-    else if args[0] == 'git':
+    elif args[0] == 'git':
         # strip the git command off the args list
-        args = [1:]
-    print_translated_usage.main(from_type = 'git', to_type = 'hg', args)
+        args = args[1:]
+    print_translated_usage.main(from_type = 'git', to_type = 'hg', args = args)
 
 if __name__ == "__main__":
     main()
