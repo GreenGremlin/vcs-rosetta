@@ -3,6 +3,7 @@
 import sys
 from vcsrosetta import print_translated_usage
 
+
 def main():
     args = sys.argv[1:]
     if len(args) == 0:
@@ -15,7 +16,8 @@ def main():
     elif args[0] == 'git':
         # strip the git command off the args list
         args = args[1:]
-    print_translated_usage.main(from_type = 'git', to_type = 'hg', args = args)
+    print_translated_usage.main(from_type='git', to_type='hg', args=args)
+
 
 if __name__ == "__main__":
     main()
