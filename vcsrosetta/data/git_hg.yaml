@@ -25,9 +25,7 @@
 #             hg [key_1] => git [value_1]
 commands:
   - hg: cat -r rev
-    git:
-      - show rev
-      - "show rev:"
+    git: [show rev, "show rev:"]
     hg_usage: hg cat -r rev [file]
     git_usage: git show rev:[file]
   - hg: init
@@ -41,9 +39,7 @@ commands:
     hg_usage: hg clone -U [url (http://url.to/repo.hg)]
     git_usage: git clone --bare [url (http|ssh|git://url.to/repo.git)]
   - hg: diff
-    git:
-      - diff HEAD
-      - diff
+    git: [diff HEAD, diff]
   - hg: status
     git: status
   - hg: status -c
@@ -59,9 +55,7 @@ commands:
       - show -s
       - show
   - hg: commit
-    git:
-      - commit -a
-      - commit
+    git: [commit -a, commit]
     hg_usage:
       commit -a: commit
   - hg: record
@@ -86,9 +80,7 @@ commands:
       - "add -p  # works on a hunk-by-hunk basis"
   - hg: mv
     git: mv
-  - hg:
-      - rm
-      - remove
+  - hg: [rm, remove]
     git: rm
   - hg: push
     git: push
@@ -113,13 +105,27 @@ commands:
     hg_usage:
       reset --hard: revert -a
       reset --hard [hash]: strip [hash]
-  - hg: revert
-    git: checkout
+  - hg:
+      - revert [file]
+      - update tip
+      - update -C
+      - update [branch]
+      - update --date [date]
+      - revert
+    git:
+      - checkout [file]
+      - checkout HEAD
+      - checkout -f
+      - checkout [branch]
+      - checkout `git rev-list -n 1 --before="[date]" master`
+      - checkout
+  - hg: [revert [file], revert]
+    git: [checkout [file], checkout]
     hg_usage:
-      checkout [file]: revert [file]
-      checkout HEAD: update tip
-      checkout -f: update -C
-      checkout [branch]: update [branch]
+      checkout [file]:                                       revert [file]
+      checkout HEAD:                                         update tip
+      checkout -f:                                           update -C
+      checkout [branch]:                                     update [branch]
       checkout `git rev-list -n 1 --before="[date]" master`: update --date [date]
     git_usage: git checkout [file]
   - hg: purge
@@ -136,23 +142,13 @@ commands:
     git: rm --cached
   - hg: export
     git: format-patch
-  - hg:
-      - import --no-commit [patch]
-      - import --no-commit
-    git:
-      - apply [patch]
-      - apply
-  - hg:
-      - import [patch]
-      - import
-    git:
-      - am [patch]
-      - am
+  - hg: [import --no-commit [patch], import --no-commit]
+    git: [apply [patch], apply]
+  - hg: [import [patch], import]
+    git: [am [patch], am]
   - hg: out
     git_usage: git fetch && git log origin/master..
-  - hg:
-      - incoming
-      - in
+  - hg: [incoming, in]
     git_usage: git fetch && git log ..origin/master
   - hg: update tip
     git: checkout HEAD
@@ -160,20 +156,16 @@ commands:
       - checkout HEAD
       - checkout master
       - "merge FETCH_HEAD # depending on what you did before this"
-  - hg: update -C
-    git: checkout -f
   - hg: update
     git_usage: |
       git checkout [branch]
       * Note that "git branch [branch]" is not the same as this.
-  - hg:
-      - update
-      - up
+  - hg: update -C
+    git: checkout -f
+  - hg: [update, up]
     git_usage:
       update --date=[date]: checkout `git rev-list -n 1 --before="[date]" master`
-  - hg:
-    - resolve -a -m
-    - resolve
+  - hg: [resolve -a -m, resolve]
     git: add -u
   - git: rev-parse
     hg_usage:
@@ -181,17 +173,13 @@ commands:
       branch: rev-parse --abbrev-ref HEAD
   - hg: root
     git: rev-parse --show-toplevel
-  - hg:
-      - log -G
-      - glog
+  - hg: [log -G, glog]
     git: log
     git_usage: |
       - log --graph --all --decorate
       - log --graph --all
       - log
-  - hg:
-      - annotate -u -n
-      - annotate -u
+  - hg: [annotate -u -n, annotate -u]
     git: blame
     hg_usage:
       - annotate -u -n
@@ -199,9 +187,7 @@ commands:
   - hg: verify
     git: fsck
   - hg: branches
-    git:
-      - branch -a
-      - branch
+    git: [branch -a, branch]
     hg_usage:
       branch: --??--
       branch -a: branches
@@ -209,21 +195,15 @@ commands:
   - hg: branch
     git: rev-parse --abbrev-ref HEAD
   - hg: rollback
-    git:
-      - reset HEAD~
-      - reset HEAD
+    git: [reset HEAD~, reset HEAD]
   - hg: backout
     git: revert
   - hg: help
     git: help
   - hg: hgignore
     git: gitignore
-  - hg:
-      - hgrc
-      - config
-    git:
-      - gitconfig
-      - config
+  - hg: [hgrc, config]
+    git: [gitconfig, config]
     hg_usage: |
       ~/.hgrc   > 	~/.gitconfig
       .hg/hgrc	>  .git/config
@@ -231,14 +211,9 @@ commands:
     git_usage: |
       ~/.gitconfig  > ~/.hgrc
       .git/config     > .hg/hgrc
-  - hg:
-      - qimport
-      - qpush
-      - qpop
+  - hg: [qimport, qpush, qpop]
     git_usage: |
       * A separate patch manager extension is probably not necessary in git,
         normal workflow combined with `git rebase -i` should cover your needs
-  - hg:
-    - qnew -f [patch]
-    - qnew -f
+  - hg: ["qnew -f [patch]", qnew -f]
     git_usage: hg qnew -f [patch] > --??--

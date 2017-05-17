@@ -5,7 +5,7 @@ Prints out the equivalent command in the other VCS.
 
 ## Installation
 ``` shell
-pip install --user git+git://github.com/GreenGremlin/vcs-rosetta.git
+pip install --user vcsrosetta
 ```
 
 ## Usage
