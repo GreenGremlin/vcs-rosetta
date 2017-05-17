@@ -1,5 +1,4 @@
 class UsageTranslator:
-
     def __init__(self, from_type, to_type, translations):
         self.from_type = from_type
         self.to_type = to_type
@@ -14,15 +13,15 @@ class UsageTranslator:
                         keyed_translations[variation] = command
                 else:
                     keyed_translations[command[from_type]] = command
-        return keyed_translations;
+        return keyed_translations
 
     def __usage_from_to__(self, from_args, to_args, width=None, indent=0):
         return '{indent}{from_cmd} {from_args} => {to_cmd} {to_args}'.format(
-            from_args = from_args if width is None else from_args.ljust(width),
-            to_args = to_args,
-            from_cmd = self.from_type,
-            to_cmd = self.to_type,
-            indent = ' ' * indent
+            from_args=from_args if width is None else from_args.ljust(width),
+            to_args=to_args,
+            from_cmd=self.from_type,
+            to_cmd=self.to_type,
+            indent=' ' * indent,
         )
 
     def __get_usage__(self, cmd_translation, args_key):
@@ -42,10 +41,10 @@ class UsageTranslator:
             longest_left = max(usage.keys(), key=len)
             return 'Translates as:\n' + '\n'.join(
                 self.__usage_from_to__(
-                    from_args = key,
-                    to_args = value,
-                    width = len(longest_left),
-                    indent = 4
+                    from_args=key,
+                    to_args=value,
+                    width=len(longest_left),
+                    indent=4,
                 )
                 for key, value in usage.iteritems()
             )
