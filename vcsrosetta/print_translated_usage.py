@@ -9,10 +9,7 @@ from usage_translator import UsageTranslator
 
 def __load_translations__(file_location):
     with open(file_location, 'r') as stream:
-        try:
-            return yaml.load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
+        return yaml.load(stream)
 
 
 def __not_found_message__(args, from_type, translations_file):

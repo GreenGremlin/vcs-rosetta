@@ -119,8 +119,8 @@ commands:
       - checkout [branch]
       - checkout `git rev-list -n 1 --before="[date]" master`
       - checkout
-  - hg: [revert [file], revert]
-    git: [checkout [file], checkout]
+  - hg: ['revert [file]', revert]
+    git: ['checkout [file]', checkout]
     hg_usage:
       checkout [file]:                                       revert [file]
       checkout HEAD:                                         update tip
@@ -142,10 +142,10 @@ commands:
     git: rm --cached
   - hg: export
     git: format-patch
-  - hg: [import --no-commit [patch], import --no-commit]
-    git: [apply [patch], apply]
-  - hg: [import [patch], import]
-    git: [am [patch], am]
+  - hg: ['import --no-commit [patch]', import --no-commit]
+    git: ['apply [patch]', apply]
+  - hg: ['import [patch]', import]
+    git: ['am [patch]', am]
   - hg: out
     git_usage: git fetch && git log origin/master..
   - hg: [incoming, in]
