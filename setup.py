@@ -12,7 +12,7 @@ setup(name='vcsrosetta',
           'scripts/g2h',
           'scripts/h2g'
       ],
-      version='0.1.1',
+      version='0.1.2',
       license='MIT',
       keywords=['git', 'mercurial', 'hg', 'rosetta', 'translate', 'translation'], # arbitrary keywords
       classifiers=[
